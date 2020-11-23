@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: country-code-rest
+spec: 
+  replicas: 1
+  minReadySeconds: 10
+  selector: 
+    matchLabels: 
+      app: country-code-rest
+  template: 
+    metadata: 
+      labels: 
+        app: country-code-rest
+    spec: 
+      containers: 
+      - name: country-code-rest
+        image: samnfulton/country-code-rest
+
