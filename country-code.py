@@ -4,6 +4,8 @@ import sys, getopt, requests, re, json
 
 def main(argv):
   country_codes = []
+  
+  # set default values
   source = 'api'
   listen = 0
   
@@ -27,18 +29,24 @@ def main(argv):
       if not bool(re.match('^[A-Za-z]{2}$', arg)):
         print(f'{opt}={arg} needs to be a 2 letter country code.')
         help()
-        sys.exit(0)
+        sys.exit(2)
       country_codes.append(str(arg))
       
     elif opt == '--source': 
       source = arg 
 
     elif opt == '--listen': 
-      listen = arg 
-  
+      try: 
+        listen = int(arg)
+      except: 
+        print(f'--listen={arg} must be an integer')
+        help()
+        sys.exit(2)
+    
   if not country_codes and listen == 0: 
     print("--countryCode option not found, listen mode not enabled ")
     help()
+    sys.exit(2)
 
   if source == 'api': 
     find_country_api(country_codes)
@@ -47,7 +55,7 @@ def main(argv):
   else: 
     print(f'Invalid source option "{source}"')
     help()
-    sys.exit(0)
+    sys.exit(2)
 
 
 def find_country_api(codes):
@@ -65,8 +73,6 @@ def find_country_file(codes):
   for code in codes: 
     name = country_data[code]['name']
     print(f'{code} = {name}')
-
-
 
 def help():
   print("""
