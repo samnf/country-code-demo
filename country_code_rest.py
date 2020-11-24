@@ -3,6 +3,10 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+@app.get('/')
+async def get_default():
+  return {}
+
 # Returns an OK status
 @app.get('/health')
 async def get_health():
@@ -18,7 +22,11 @@ async def get_diag():
 # Lookup of country code, returns country name
 @app.get('/lookup')
 async def lookup_code(countryCode: str):
-  countryName = find_country_api([countryCode])[countryCode]['name']
+  countryCode = countryCode.upper()
+  try: 
+    countryName = find_country_api([countryCode])[countryCode]['name']
+  except: 
+    return {'error': 'Country code not found'}
   return {'code': countryCode, 'name': countryName}
 
 # Searches for a country name (case insensitive) and returns a code if found
@@ -31,7 +39,7 @@ async def convert_name(countryName: str):
     if countryData[country]['name'].lower() == countryName.lower(): 
       return {'code': country, 'name': countryData[country]['name']}
     
-  return {'error': 'Country not found'}
+  return {'error': 'Country name not found'}
   
 def find_country_api(code):
   params = ''
