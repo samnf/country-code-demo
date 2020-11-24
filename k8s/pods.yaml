@@ -15,5 +15,5 @@ spec:
     spec: 
       containers: 
       - name: country-code-rest
-        image: samnfulton/country-code-rest
+        image: samnfulton/country-code-rest:v1
 
