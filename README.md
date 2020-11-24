@@ -1,4 +1,8 @@
 # country-code-demo
+
+## Prerequisites
+* python 3.7 or newer
+* installed pip dependencies: `pip install --no-cache-dir -r requirements.txt`
 ## Command line
 Usage: `python ./country_code.py --help` 
 
@@ -10,8 +14,8 @@ kubectl apply -f k8s/services.yaml
 ```
 
 
-## Monitoring via Grafana and Prometheus
-Launched using helm: 
+## Monitoring with Grafana and Prometheus
+Launched using the prometheus-community helm chart: 
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add stable https://charts.helm.sh/stable
@@ -20,7 +24,9 @@ helm install prom prometheus-community/kube-prometheus-stack --namespace monitor
 ```
 
 Access by setting up port forwarding:
-`kubectl port-forward $(kubectl get pods -l app.kubernetes.io/name=grafana -n monitoring -o name) --namespace monitoring 3000`
+```
+kubectl port-forward $(kubectl get pods -l app.kubernetes.io/name=grafana -n monitoring -o name) --namespace monitoring 3000
+```
 
 Grafana is running at http://localhost:3000
 user: admin 
