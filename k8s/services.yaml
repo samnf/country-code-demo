@@ -3,7 +3,6 @@ kind: Service
 metadata: 
   name: country-code-rest
 spec: 
-  # defines pods represented by this service
   selector: 
     app: country-code-rest
   

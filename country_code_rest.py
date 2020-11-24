@@ -3,21 +3,25 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+# Returns an OK status
 @app.get('/health')
 async def get_health():
   return {'code': 200, 'status': 'OK'}
 
+# Calls the travel advisory API, returns the status received 
 @app.get('/diag')
 async def get_diag():
   url = 'https://www.travel-advisory.info/api'
   r = requests.get(url).json()['api_status']['reply']
   return {'api_status': r['status'], 'api_code': r['code'], 'api_note': r['note']}
 
+# Lookup of country code, returns country name
 @app.get('/lookup')
 async def lookup_code(countryCode: str):
   countryName = find_country_api([countryCode])[countryCode]['name']
   return {'code': countryCode, 'name': countryName}
 
+# Searches for a country name (case insensitive) and returns a code if found
 @app.get('/convert')
 async def convert_name(countryName: str):
   
