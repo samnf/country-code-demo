@@ -1,18 +1,22 @@
-# country-code-demo
+# Country Code Demo
 
-## Prerequisites
+## Command Line
+### Prerequisites
 * python 3.7 or newer
 * installed pip dependencies: `pip install --no-cache-dir -r requirements.txt`
-## Command line
-Usage: `python ./country_code.py --help` 
+### Usage
+`python ./country_code.py --help` 
 
-## Kubernetes
+## Docker and Kubernetes
+### Docker image
+Docker image is built locally and pushed here:
+`https://hub.docker.com/r/samnfulton/country-code-demo`
+### K8s Config Files
 Pod and services files are in `/k8s/`
 ```
 kubectl apply -f k8s/pods.yaml
 kubectl apply -f k8s/services.yaml
 ```
-
 
 ## Monitoring with Grafana and Prometheus
 Launched using the prometheus-community helm chart: 
@@ -31,3 +35,7 @@ kubectl port-forward $(kubectl get pods -l app.kubernetes.io/name=grafana -n mon
 Grafana is running at http://localhost:3000
 user: admin 
 pass: prom-operator
+
+## Next Steps: 
+* Automate docker build/push with Github Actions
+* Create proper endpoint for Grafana for access outside the cluster
