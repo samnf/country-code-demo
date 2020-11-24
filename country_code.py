@@ -52,10 +52,15 @@ def main(argv):
 def find_country_api(codes):
   
   for code in codes: 
+    code = code.upper()
     params = { 'countrycode': code }
     url = 'https://www.travel-advisory.info/api'
     r = requests.get(url, params=params)
-    country_name = r.json()['data'][code]['name']
+    try: 
+      country_name = r.json()['data'][code]['name']
+    except: 
+      print(f'Country code {code} not found')
+      return
     print(f'{code} = {country_name}')
   
 def find_country_file(codes):
@@ -64,7 +69,12 @@ def find_country_file(codes):
     country_data = json.load(f)['data'] 
 
   for code in codes: 
-    name = country_data[code]['name']
+    code = code.upper()
+    try: 
+      name = country_data[code]['name']
+    except: 
+      print(f'Country code {code} not found')
+      return
     print(f'{code} = {name}')
 
 def help():
